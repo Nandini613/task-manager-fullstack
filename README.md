@@ -36,5 +36,3 @@ The project is set up for automatic deployment on Railway.
 - **Server Root:** `/server` (Variables: `MONGO_URI`, `JWT_SECRET`, `PORT`, `NODE_ENV`, `CLIENT_URL`)
 - **Client Root:** `/client` (Variables: `VITE_API_URL`)
 
----
-Created with ❤️ by Antigravity AI for Nandini Sharma.
