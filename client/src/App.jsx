@@ -6,7 +6,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
 
-  const API_URL = "http://localhost:5000/api/tasks";
+  const API_URL = "https://task-manager-api-ps4v.onrender.com/api/tasks";
 
   const fetchTasks = async () => {
     const res = await axios.get(API_URL);
