@@ -1,0 +1,69 @@
+.kanban-board {
+  display: flex;
+  gap: 24px;
+  flex: 1;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  min-height: 500px;
+}
+
+.kanban-column {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.kanban-col-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.task-count {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.kanban-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.kanban-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: grab;
+  transition: var(--transition);
+}
+
+.kanban-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.kanban-card:active {
+  cursor: grabbing;
+}
+
+.kanban-card h4 {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}

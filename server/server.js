@@ -14,7 +14,11 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/projects", require("./routes/projectRoutes"));
 app.use("/api/tasks", require("./routes/taskRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes"));
+app.use("/api/categories", require("./routes/categoryRoutes"));
 
 app.get("/", (req, res) => {
   res.send("API Running");

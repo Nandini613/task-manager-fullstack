@@ -1,81 +1,55 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import "./App.css";
+import { useContext } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard';
+import ProjectView from './pages/ProjectView';
+import TeamManagement from './pages/TeamManagement';
+import MasterBoard from './pages/MasterBoard';
+import GlobalCategories from './pages/GlobalCategories';
+import AdminSettings from './pages/AdminSettings';
+import AssignedToMe from './pages/member/AssignedToMe';
+import MyToday from './pages/member/MyToday';
+import Upcoming from './pages/member/Upcoming';
+import MyInbox from './pages/member/MyInbox';
+import Placeholder from './pages/Placeholder';
+import Layout from './components/Layout';
+import './App.css';
+
+const PrivateRoute = ({ children }) => {
+  const { user, loading } = useContext(AuthContext);
+  if (loading) return null;
+  return user ? <Layout>{children}</Layout> : <Navigate to="/login" />;
+};
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-  const [title, setTitle] = useState("");
-
-  const API_URL = "https://task-manager-api-ps4v.onrender.com/api/tasks";
-
-  const fetchTasks = async () => {
-    const res = await axios.get(API_URL);
-    setTasks(res.data);
-  };
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  const addTask = async () => {
-    if (!title) return;
-
-    await axios.post(API_URL, {
-      title,
-    });
-
-    setTitle("");
-    fetchTasks();
-  };
-
-  const deleteTask = async (id) => {
-    await axios.delete(`${API_URL}/${id}`);
-    fetchTasks();
-  };
-
-  const toggleComplete = async (task) => {
-    await axios.put(`${API_URL}/${task._id}`, {
-      completed: !task.completed,
-    });
-
-    fetchTasks();
-  };
+  const { showWelcome } = useContext(AuthContext);
 
   return (
-    <div className="container">
-      <h1>Task Manager</h1>
-
-      <div className="input-section">
-        <input
-          type="text"
-          placeholder="Enter task"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <button onClick={addTask}>Add</button>
-      </div>
-
-      {tasks.map((task) => (
-        <div className="task" key={task._id}>
-          <span
-            onClick={() => toggleComplete(task)}
-            style={{
-              textDecoration: task.completed
-                ? "line-through"
-                : "none",
-              cursor: "pointer",
-            }}
-          >
-            {task.title}
-          </span>
-
-          <button onClick={() => deleteTask(task._id)}>
-            Delete
-          </button>
+    <>
+      {showWelcome && (
+        <div className="welcome-overlay">
+          <div className="welcome-text">welcome to tasking</div>
         </div>
-      ))}
-    </div>
+      )}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        
+        <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/project/:id" element={<PrivateRoute><ProjectView /></PrivateRoute>} />
+
+        <Route path="/team" element={<PrivateRoute><TeamManagement /></PrivateRoute>} />
+        <Route path="/master-board" element={<PrivateRoute><MasterBoard /></PrivateRoute>} />
+        <Route path="/categories" element={<PrivateRoute><GlobalCategories /></PrivateRoute>} />
+        <Route path="/settings" element={<PrivateRoute><AdminSettings /></PrivateRoute>} />
+        <Route path="/inbox" element={<PrivateRoute><MyInbox /></PrivateRoute>} />
+        <Route path="/today" element={<PrivateRoute><MyToday /></PrivateRoute>} />
+        <Route path="/upcoming" element={<PrivateRoute><Upcoming /></PrivateRoute>} />
+        <Route path="/assigned" element={<PrivateRoute><AssignedToMe /></PrivateRoute>} />
+      </Routes>
+    </>
   );
 }
 
