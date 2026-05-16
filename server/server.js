@@ -7,7 +7,8 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
-  process.env.CLIENT_URL
+  process.env.CLIENT_URL,
+  'https://task-manager-fullstack-production-fbb3.up.railway.app'
 ].filter(Boolean);
 
 app.use(cors({
